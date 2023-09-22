@@ -1,0 +1,28 @@
+version: "3.9"
+services:
+  music-db:
+    container_name: music-db
+    image: postgres
+    environment:
+
+      POSTGRES_DB: "music-db"
+      POSTGRES_USER: "MXUjjghgWUKoEoQEUWhgwnyV"
+      POSTGRES_PASSWORD: "b4aRgkGo2WYGRWDhLk7DimncsyyDkFbn"
+
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    volumes:
+      - music-db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U MXUjjghgWUKoEoQEUWhgwnyV -d music-db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+
+volumes:
+  music-db:
+    external: true
